@@ -4,114 +4,98 @@ namespace CodeWars.Tasks
 {
     public class Game
     {
-        private int maxNumberLen;
-        private int board;
-        public Game(int board)
+        private int[,] board;
+        private List<List<int>> coordinat = new List<List<int>>();
+
+        public Game(int[,] board)
         {
             this.board = board;
-            //Console.WriteLine(board);
-            maxNumberLen = board * (board + 1) * 2;
         }
 
-        public List<int> play(List<int> lines)
+        public int play()
         {
-            int l = board * 2 + 1;
-
-            //lines.ForEach(x => Console.Write("{0} ", x));
-            lines.Sort();
-            int iterr = 1;
-            while (iterr != 0)
+            int steps = 0;
+            for (int x = 0; x < board.GetLength(0); x++)
             {
-                iterr = 0;
-                for (int i = 0; i < lines.Count; i++)
+                for (int y = 0; y < board.GetLength(0); y++)
                 {
-                    int mod = lines[i] % l;
-
-                    bool vertical = mod == 0 || mod > board;
-
-                    if (!vertical)
+                    if (board[x, y] == 1)
                     {
-                        int U = board * 2 + 1;
-                        int L = board;
-                        int R = board + 1;
-                        int countUp = 0;
-                        if (lines.Contains(lines[i] + U)) countUp++;
-                        if (lines.Contains(lines[i] + R)) countUp++;
-                        if (lines.Contains(lines[i] + L)) countUp++;
-
-                        if (countUp == 2)
-                        {
-                            if (!lines.Contains(lines[i] + U))
-                            {
-                                if (lines[i] + U > 0 && lines[i] + U < maxNumberLen)
-                                {
-                                    lines.Add(lines[i] + U);
-                                    iterr++;
-                                    continue;
-                                }
-                            }
-                            if (!lines.Contains(lines[i] + R))
-                            {
-                                if (lines[i] + R > 0 && lines[i] + R < maxNumberLen)
-                                {
-                                    lines.Add(lines[i] + R);
-                                    iterr++;
-                                    continue;
-                                }
-                            }
-                            if (!lines.Contains(lines[i] + L))
-                            {
-                                if (lines[i] + L > 0 && lines[i] + L < maxNumberLen)
-                                {
-                                    lines.Add(lines[i] + L);
-                                    iterr++;
-                                    continue;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            int countDown = 0;
-                            if (lines.Contains(lines[i] - U)) countDown++;
-                            if (lines.Contains(lines[i] - R)) countDown++;
-                            if (lines.Contains(lines[i] - L)) countDown++;
-
-                            if (countDown == 2)
-                            {
-                                if (!lines.Contains(lines[i] - U))
-                                {
-                                    if (lines[i] - U > 0 && lines[i] - U < maxNumberLen)
-                                    {
-                                        lines.Add(lines[i] - U);
-                                        iterr++;
-                                        continue;
-                                    }
-                                }
-                                if (!lines.Contains(lines[i] - R))
-                                {
-                                    if (lines[i] - R > 0 && lines[i] - R < maxNumberLen)
-                                    {
-                                        lines.Add(lines[i] - R);
-                                        iterr++;
-                                        continue;
-                                    }
-                                }
-                                if (!lines.Contains(lines[i] - L))
-                                {
-                                    if (lines[i] - L > 0 && lines[i] - L < maxNumberLen)
-                                    {
-                                        lines.Add(lines[i] - L);
-                                        iterr++;
-                                        continue;
-                                    }
-                                }
-                            }
-                        }
+                        steps++;
+                        coordinat.Add(new List<int> { x, y });
+                        board.SetValue(0, y, x);
+                        bordReplace(x, y);
+                        coordinat.Clear();
                     }
                 }
             }
-
-            return lines.OrderBy(i => i).ToList();
+            return steps;
         }
+
+        private void bordReplace(int x, int y)
+        {
+            //try
+            //{
+            //    if (board[x, y] == 1)
+            //    {
+            //        coordinat.Add(new List<int> { x, y });
+            //        board.SetValue(0, y, x);
+            //        bordReplace(x, y);
+            //    }
+
+            //}
+            //catch (IndexOutOfRangeException) { }
+            try
+            {
+                if (board[y, x + 1] == 1)
+                {
+                    coordinat.Add(new List<int> { x + 1, y });
+                    board.SetValue(0, y, x + 1);
+                    bordReplace(x + 1, y);
+                }
+
+            }
+            catch (IndexOutOfRangeException) { }
+            try
+            {
+                if (board[y, x - 1] == 1)
+                {
+                    coordinat.Add(new List<int> { x - 1, y });
+                    board.SetValue(0, y, x - 1);
+                    bordReplace(x - 1, y);
+                }
+
+            }
+            catch (IndexOutOfRangeException) { }
+            try
+            {
+                if (board[y - 1, x] == 1)
+                {
+                    coordinat.Add(new List<int> { x, y - 1 });
+                    board.SetValue(0, y - 1, x);
+                    bordReplace(x, y - 1);
+                }
+
+            }
+            catch (IndexOutOfRangeException) { }
+            try
+            {
+                if (board[y + 1, x] == 1)
+                {
+                    coordinat.Add(new List<int> { x, y + 1 });
+                    board.SetValue(0, y + 1, x);
+                    bordReplace(x, y + 1);
+                }
+
+            }
+            catch (IndexOutOfRangeException) { }
+
+
+
+
+
+
+        }
+
     }
 }

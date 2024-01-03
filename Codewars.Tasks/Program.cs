@@ -10,9 +10,9 @@ namespace CodeWars.Tasks
     {
         public static void Main()
         {
-            Game game = new Game(2);
-            List<int> c = new List<int> { 1, 2, 3, 4, 5, 8, 10, 11, 12 };
-            game.play(c);
+            //Game game = new Game(2);
+            //List<int> c = new List<int> { 1, 2, 3, 4, 5, 8, 10, 11, 12 };
+            //game.play(c);
         }
     }
 }
