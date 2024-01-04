@@ -4,8 +4,7 @@ namespace CodeWars.Tasks
 {
     public class Game
     {
-        private int[,] board;
-        private List<List<int>> coordinat = new List<List<int>>();
+        private readonly int[,] board;
 
         public Game(int[,] board)
         {
@@ -19,82 +18,44 @@ namespace CodeWars.Tasks
             {
                 for (int y = 0; y < board.GetLength(0); y++)
                 {
-                    if (board[x, y] == 1)
+                    if (board[y, x] == 1)
                     {
                         steps++;
-                        coordinat.Add(new List<int> { x, y });
-                        board.SetValue(0, y, x);
-                        bordReplace(x, y);
-                        coordinat.Clear();
+                        clearItem(y, x);
                     }
                 }
             }
             return steps;
         }
 
-        private void bordReplace(int x, int y)
+        private void clearItem(int y, int x)
         {
-            //try
-            //{
-            //    if (board[x, y] == 1)
-            //    {
-            //        coordinat.Add(new List<int> { x, y });
-            //        board.SetValue(0, y, x);
-            //        bordReplace(x, y);
-            //    }
-
-            //}
-            //catch (IndexOutOfRangeException) { }
+            if (board[y, x] == 0)
+            {
+                return;
+            }
+            board.SetValue(0, y, x);
+            clearItem(y, x);
             try
             {
-                if (board[y, x + 1] == 1)
-                {
-                    coordinat.Add(new List<int> { x + 1, y });
-                    board.SetValue(0, y, x + 1);
-                    bordReplace(x + 1, y);
-                }
-
+                clearItem(y, x + 1);
             }
             catch (IndexOutOfRangeException) { }
             try
             {
-                if (board[y, x - 1] == 1)
-                {
-                    coordinat.Add(new List<int> { x - 1, y });
-                    board.SetValue(0, y, x - 1);
-                    bordReplace(x - 1, y);
-                }
-
+                clearItem(y, x - 1);
             }
             catch (IndexOutOfRangeException) { }
             try
             {
-                if (board[y - 1, x] == 1)
-                {
-                    coordinat.Add(new List<int> { x, y - 1 });
-                    board.SetValue(0, y - 1, x);
-                    bordReplace(x, y - 1);
-                }
-
+                clearItem(y - 1, x);
             }
             catch (IndexOutOfRangeException) { }
             try
             {
-                if (board[y + 1, x] == 1)
-                {
-                    coordinat.Add(new List<int> { x, y + 1 });
-                    board.SetValue(0, y + 1, x);
-                    bordReplace(x, y + 1);
-                }
-
+                clearItem(y + 1, x);
             }
             catch (IndexOutOfRangeException) { }
-
-
-
-
-
-
         }
 
     }

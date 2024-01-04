@@ -26,7 +26,7 @@ namespace CodeWars.Tests
                              { 0, 0, 0, 1, 1 },
                              { 0, 0, 0, 1, 1 } };
             Game game = new Game(board);
-            Assert.AreEqual(game.play(), 3, "Should return '3'");
+            Assert.AreEqual(3, game.play(), "Should return '3'");
         }
 
         [TestCase]
