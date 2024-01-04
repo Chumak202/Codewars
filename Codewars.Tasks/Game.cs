@@ -1,62 +1,41 @@
 ﻿using System.Collections.Generic;
 
+
 namespace CodeWars.Tasks
 {
     public class Game
     {
-        private readonly int[,] board;
-
-        public Game(int[,] board)
+        public int fish(string shoal)
         {
-            this.board = board;
-        }
-
-        public int play()
-        {
-            int steps = 0;
-            for (int x = 0; x < board.GetLength(0); x++)
+            int youFishSize = 1;
+            int youFishHonor = 0;
+            var sortShoal = from i in shoal
+                            where i != '0'
+                            orderby i
+                            select i;
+            foreach (var i in sortShoal)
             {
-                for (int y = 0; y < board.GetLength(0); y++)
+                if (youFishHonor >= youFishSize * 4)
                 {
-                    if (board[y, x] == 1)
-                    {
-                        steps++;
-                        clearItem(y, x);
-                    }
+                    youFishHonor -= youFishSize * 4;
+                    youFishSize++;
+
+                }
+                if (int.Parse(i.ToString()) <= youFishSize)
+                {
+                    youFishHonor += int.Parse(i.ToString());
+                }
+                else
+                {
+                    return youFishSize;
                 }
             }
-            return steps;
+            if (youFishHonor == youFishSize * 4)
+            {
+                youFishSize++;
+                youFishHonor = 0;
+            }
+            return youFishSize;
         }
-
-        private void clearItem(int y, int x)
-        {
-            if (board[y, x] == 0)
-            {
-                return;
-            }
-            board.SetValue(0, y, x);
-            clearItem(y, x);
-            try
-            {
-                clearItem(y, x + 1);
-            }
-            catch (IndexOutOfRangeException) { }
-            try
-            {
-                clearItem(y, x - 1);
-            }
-            catch (IndexOutOfRangeException) { }
-            try
-            {
-                clearItem(y - 1, x);
-            }
-            catch (IndexOutOfRangeException) { }
-            try
-            {
-                clearItem(y + 1, x);
-            }
-            catch (IndexOutOfRangeException) { }
-        }
-
     }
 }

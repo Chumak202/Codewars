@@ -4,53 +4,76 @@ namespace CodeWars.Tests
 {
     public class GameTests
     {
-
         [TestCase]
         public void BasicTest1()
         {
-            int[,] board = { { 1, 1, 0, 0, 0 },
-                             { 1, 1, 0, 0, 0 },
-                             { 0, 0, 0, 0, 0 },
-                             { 0, 0, 0, 1, 1 },
-                             { 0, 0, 0, 1, 1 } };
-            Game game = new Game(board);
-            Assert.AreEqual(game.play(), 2, "Should return '2'");
+            Game game = new Game();
+            string shoal = "";
+            Assert.AreEqual(1, game.fish(shoal));
         }
 
         [TestCase]
         public void BasicTest2()
         {
-            int[,] board = { { 1, 0, 1, 0, 1 },
-                             { 1, 0, 1, 0, 1 },
-                             { 1, 1, 1, 0, 0 },
-                             { 0, 0, 0, 1, 1 },
-                             { 0, 0, 0, 1, 1 } };
-            Game game = new Game(board);
-            Assert.AreEqual(3, game.play(), "Should return '3'");
+            Game game = new Game();
+            string shoal = "0";
+            Assert.AreEqual(1, game.fish(shoal));
         }
 
         [TestCase]
         public void BasicTest3()
         {
-            int[,] board = { { 1, 0, 1, 0, 1 },
-                             { 0, 1, 0, 1, 0 },
-                             { 1, 0, 1, 0, 1 },
-                             { 0, 1, 0, 1, 0 },
-                             { 1, 0, 1, 0, 1 } };
-            Game game = new Game(board);
-            Assert.AreEqual(game.play(), 13, "Should return '13'");
+            Game game = new Game();
+            string shoal = "6";
+            Assert.AreEqual(1, game.fish(shoal));
         }
 
         [TestCase]
         public void BasicTest4()
         {
-            int[,] board = { { 1, 0, 0, 0, 0 },
-                             { 0, 0, 1, 1, 0 },
-                             { 1, 0, 1, 0, 1 },
-                             { 1, 1, 1, 1, 0 },
-                             { 1, 1, 1, 0, 1 } };
-            Game game = new Game(board);
-            Assert.AreEqual(game.play(), 4, "Should return '4'");
+            Game game = new Game();
+            string shoal = "1111";
+            Assert.AreEqual(2, game.fish(shoal));
+        }
+
+        [TestCase]
+        public void BasicTest5()
+        {
+            Game game = new Game();
+            string shoal = "11112222";
+            Assert.AreEqual(3, game.fish(shoal));
+        }
+
+        [TestCase]
+        public void BasicTest6()
+        {
+            Game game = new Game();
+            string shoal = "111122223333";
+            Assert.AreEqual(4, game.fish(shoal));
+        }
+
+        [TestCase]
+        public void BasicTest7()
+        {
+            Game game = new Game();
+            string shoal = "111111111111";
+            Assert.AreEqual(3, game.fish(shoal));
+        }
+
+        [TestCase]
+        public void ExtraTest8()
+        {
+            Game game = new Game();
+            string shoal = "111111111111111111112222222222";
+            Assert.AreEqual(5, game.fish(shoal));
+        }
+
+        [TestCase]
+        public void BasicTest9()
+        {
+            Game game = new Game();
+            string shoal = "151128241212192113722321331";
+            Assert.AreEqual(5, game.fish(shoal));
         }
     }
 }
